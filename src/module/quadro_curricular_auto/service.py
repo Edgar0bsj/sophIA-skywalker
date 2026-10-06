@@ -133,8 +133,11 @@ class Service:
         box: dict[str, Turma] = {}
 
         for _, value in df.iterrows():
+
             turma = str(value[col_turma])
-            prof = Professor(nome=value[col_prof])
+            prof = Professor(
+                nome=value[col_prof] if not pd.isna(value[col_prof]) else ""
+            )
             disc = Disciplina(nome=value[col_disc], prof=prof)
 
             if not turma in box:

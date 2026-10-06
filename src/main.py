@@ -5,7 +5,7 @@ from src.module.quadro_curricular_auto.controller import QuadroCurricularControl
 
 
 def main():
-    qcc = QuadroCurricularController("textoAutoFill.xlsx")
+    qcc = QuadroCurricularController("ni_textoAutoFill.xlsx")
     qcc.grade_curricular_setting(
         turma_stado=AutoParam(x=66, y=349, cor=(255, 201, 14)),  # <-
         stado_dados_turma=AutoParam(x=1056, y=90, cor=(128, 128, 128)),
