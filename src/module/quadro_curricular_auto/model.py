@@ -42,6 +42,10 @@ class AutoParam(BaseModel):
 
 
 class GradeCurricularSetting(BaseModel):
+
+    # QUADRO CURRICULAR
+    stado_dados_turma: AutoParam
+    aba_quadro_curricular: AutoParam
     input_prof_1: AutoParam
     input_prof_2: AutoParam
     btn_proximo: AutoParam
@@ -50,3 +54,11 @@ class GradeCurricularSetting(BaseModel):
     q_semana: AutoParam
     warning: AutoParam
     ok_warning: AutoParam
+    # FILTRO
+    turma_stado: AutoParam
+    campo_list_turmas: AutoParam
+    # SALVAR DADOS DA TURMA
+    salvar_dados_turma: AutoParam
+    fechar_dados_turma: AutoParam
+    fechar_dados_turma_confirm1: AutoParam
+    fechar_dados_turma_confirm2: AutoParam

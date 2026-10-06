@@ -1,2 +1,10 @@
 venv/
 logs/
+
+# Ignora todas as pastas __pycache__ do projeto
+__pycache__/
+
+# Ignora arquivos compilados de bytecode isolados
+*.pyc
+*.pyo
+*.pyd

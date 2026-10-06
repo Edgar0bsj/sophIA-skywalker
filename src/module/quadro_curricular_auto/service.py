@@ -21,7 +21,7 @@ class Service:
         self,
         gc: GradeCurricularSetting,
         prof_name: str,
-        sleep_time: float = 0.5,
+        sleep_time: float = 2,
         write_delay: float = 0.04,
         matche_color_tolerance: int = 10,
     ):
@@ -53,7 +53,7 @@ class Service:
         self,
         gc: GradeCurricularSetting,
         matche_color_tolerance: int = 10,
-        sleep_time: float = 0.7,
+        sleep_time: float = 2,
     ):
 
         if pag.pixelMatchesColor(
@@ -75,7 +75,7 @@ class Service:
     def tratar_warning(
         self,
         gc: GradeCurricularSetting,
-        sleep_time: float = 0.5,
+        sleep_time: float = 2,
         write_delay: float = 0.04,
         matche_color_tolerance: int = 10,
     ):
@@ -134,8 +134,8 @@ class Service:
 
         for _, value in df.iterrows():
             turma = str(value[col_turma])
-            prof = Professor(nome=value[col_disc])
-            disc = Disciplina(nome=value[col_prof], prof=prof)
+            prof = Professor(nome=value[col_prof])
+            disc = Disciplina(nome=value[col_disc], prof=prof)
 
             if not turma in box:
                 box[turma] = Turma(nome=turma, disciplina=[])
@@ -155,3 +155,109 @@ class Service:
             f"[bold white]Concluido:[/bold white] [bold green]{round(percentual)}%[/bold green]\n"
         )
         print(Panel(info, title="[bold cyan]Informações[/bold cyan]", expand=False))
+
+    # ================================================
+    # stado_turmas_filtrar_curso
+    # ================================================
+    def stado_turmas_filtrar_curso(
+        self,
+        turma: str,
+        gc: GradeCurricularSetting,
+        sleep_time: float = 2,
+        write_delay: float = 0.04,
+        matche_color_tolerance: int = 10,
+    ):
+
+        if pag.pixelMatchesColor(
+            gc.turma_stado.x,
+            gc.turma_stado.y,
+            gc.turma_stado.cor,
+            tolerance=matche_color_tolerance,
+        ):
+            pag.sleep(sleep_time)
+            pag.click(x=gc.campo_list_turmas.x, y=gc.campo_list_turmas.y)
+            pag.sleep(sleep_time)
+            keyboard.write(turma, delay=write_delay)
+            pag.sleep(sleep_time)
+            pag.press("enter")
+            pag.sleep(5)
+            pag.hotkey("win", "up")
+            pag.sleep(sleep_time)
+        else:
+            print(">>>>>>>>  ERROR  <<<<<<<<<<<")
+            input("")
+            raise Exception(">>>>>>>>  ERROR  <<<<<<<<<<<")
+
+    # ================================================
+    # stado_dados_turmas_ir_para_quadro_curricular
+    # ================================================
+    def stado_dados_turmas_ir_para_quadro_curricular(
+        self,
+        gc: GradeCurricularSetting,
+        sleep_time: float = 3,
+        matche_color_tolerance: int = 10,
+    ):
+
+        if pag.pixelMatchesColor(
+            gc.stado_dados_turma.x,
+            gc.stado_dados_turma.y,
+            gc.stado_dados_turma.cor,
+            tolerance=matche_color_tolerance,
+        ):
+            pag.sleep(sleep_time)
+            pag.click(x=gc.aba_quadro_curricular.x, y=gc.aba_quadro_curricular.y)
+            pag.sleep(sleep_time)
+        else:
+            print(">>>>>>>>  ERROR  <<<<<<<<<<<")
+            input("")
+            raise Exception(">>>>>>>>  ERROR  <<<<<<<<<<<")
+
+    # ================================================
+    # salvar_dados_da_turma
+    # ================================================
+    def salvar_dados_da_turma(
+        self,
+        gc: GradeCurricularSetting,
+        size_turma: int,
+        sleep_time: float = 3,
+        matche_color_tolerance: int = 10,
+    ):
+
+        if pag.pixelMatchesColor(
+            gc.salvar_dados_turma.x,
+            gc.salvar_dados_turma.y,
+            gc.salvar_dados_turma.cor,
+            tolerance=matche_color_tolerance,
+        ):
+            pag.sleep(sleep_time)
+            pag.click(x=gc.salvar_dados_turma.x, y=gc.salvar_dados_turma.y)
+            pag.sleep(sleep_time)
+            pag.click(x=gc.fechar_dados_turma.x, y=gc.fechar_dados_turma.y)
+            pag.sleep(sleep_time)
+            if pag.pixelMatchesColor(
+                gc.fechar_dados_turma_confirm1.x,
+                gc.fechar_dados_turma_confirm1.y,
+                gc.fechar_dados_turma_confirm1.cor,
+                tolerance=matche_color_tolerance,
+            ):
+                pag.click(
+                    x=gc.fechar_dados_turma_confirm1.x,
+                    y=gc.fechar_dados_turma_confirm1.y,
+                )
+                pag.sleep(sleep_time)
+                pag.click(
+                    x=gc.fechar_dados_turma_confirm2.x,
+                    y=gc.fechar_dados_turma_confirm2.y,
+                )
+                pag.sleep(sleep_time)
+                pag.click(
+                    x=gc.campo_list_turmas.x,
+                    y=gc.campo_list_turmas.y,
+                )
+                pag.sleep(sleep_time)
+                pag.press("backspace", presses=size_turma, interval=0.1)
+
+        else:
+            print(">>>>>>>>  ERROR  <<<<<<<<<<<")
+            input("")
+            raise Exception(">>>>>>>>  ERROR  <<<<<<<<<<<")
